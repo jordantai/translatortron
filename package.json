@@ -1,0 +1,20 @@
+{
+  "name": "translatortron",
+  "version": "1.0.0",
+  "description": "translator for totara lang string files",
+  "main": "app.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jordantai/translatortron.git"
+  },
+  "author": "Jordan Craigen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jordantai/translatortron/issues"
+  },
+  "homepage": "https://github.com/jordantai/translatortron#readme"
+}
