@@ -11,7 +11,7 @@ const extractLangStrings = (file, callback) => {
       const regex = /= '[A-Za-z].+'/g;
       const strArray = result.toString().match(regex);
       const resultArr = strArray.map((str) => {
-        return str.slice(3, -1);
+        return str;
       });
       callback(resultArr);
       return resultArr;
@@ -25,7 +25,7 @@ const extractIdentifiers = (file, callback) => {
   return fs.promises
     .readFile(file)
     .then((result) => {
-      const regex = /\$string\['[a-z_].+'\]\s*=/g;
+      const regex = /\$string\['[a-z_].+'\]\s*/g;
       const strArray = result.toString().match(regex);
       const resultArr = strArray.map((str) => {
         return str;
@@ -51,7 +51,6 @@ const formNewFile = (arr1, arr2) => {
 
 let identifiers;
 let languageStrings;
-let translatedStrings;
 extractLangStrings(textFile, (result) => {
   languageStrings = result;
   extractIdentifiers(textFile, (result) => {
