@@ -4,7 +4,7 @@ const { translateText } = require("./translate");
 const srcLang = "en";
 const targetLang = "it";
 
-const extractLangStrings = (file) => {
+const extractLangStrings = (file, callback) => {
   return fs.promises
     .readFile(file)
     .then((result) => {
@@ -13,6 +13,7 @@ const extractLangStrings = (file) => {
       const resultArr = strArray.map((str) => {
         return str.slice(3, -1);
       });
+      callback(resultArr);
       return resultArr;
     })
     .catch((err) => {
@@ -20,15 +21,16 @@ const extractLangStrings = (file) => {
     });
 };
 
-const extractIdentifiers = (file) => {
+const extractIdentifiers = (file, callback) => {
   return fs.promises
     .readFile(file)
     .then((result) => {
-      const regex = /\$string\['[a-z_].+'\]\s*/g;
+      const regex = /\$string\['[a-z_].+'\]\s*=/g;
       const strArray = result.toString().match(regex);
       const resultArr = strArray.map((str) => {
         return str;
       });
+      callback(resultArr);
       return resultArr;
     })
     .catch((err) => {
@@ -37,13 +39,28 @@ const extractIdentifiers = (file) => {
 };
 
 const textFile = "./langstrings.php";
-//extractIdentifiers(file);
-//extractLangStrings(file);
-const str = extractLangStrings(textFile).then((result) => {
-  console.log(translateText(result, srcLang, targetLang));
-});
-extractIdentifiers(textFile).then((res) => {
-  console.log(res);
-});
 
-//translateText(str, srcLang, targetLang);
+const formNewFile = (arr1, arr2) => {
+  let newArr = [];
+  for (let i = 0; i < arr1.length; i++) {
+    newArr.push(arr1[i] + arr2[i]);
+  }
+  console.log({ newArr });
+  return newArr;
+};
+
+let identifiers;
+let languageStrings;
+let translatedStrings;
+extractLangStrings(textFile, (result) => {
+  languageStrings = result;
+  extractIdentifiers(textFile, (result) => {
+    identifiers = result;
+
+    translateText(languageStrings, srcLang, targetLang, () => {}).then(
+      (result) => {
+        formNewFile(identifiers, result);
+      },
+    );
+  });
+});

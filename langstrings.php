@@ -25,7 +25,6 @@ $string['my_courses_header_desc'] = 'The image shown in the collapsible header o
 
 // CCL name and copyright text
 $string['full_ccl_name']             = 'Center for Creative Leadership';
-$string['copyright_symbol_and_year'] = '© ' . date('Y');
 
 // Header navigation tab text
 // Courses
