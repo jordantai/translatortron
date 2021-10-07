@@ -58,7 +58,7 @@ extractLangStrings(textFile, (result) => {
 
     translateText(languageStrings, srcLang, targetLang, () => {}).then(
       (result) => {
-        formNewFile(identifiers, result);
+        fs.promises.writeFile("newFile.php", formNewFile(identifiers, result));
       },
     );
   });
