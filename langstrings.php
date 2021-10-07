@@ -52,7 +52,7 @@ $string['certificate']  = 'Certificate';
 $string['opens_in']     = 'Opens In';
 $string['access_start'] = 'Access Start';
 $string['access_end']   = 'Access End';
-$string['n_a']          = "N/A";
+$string['n_a']          = 'N/A';
 
 // Course Status
 $string['course_status_current']  = 'Current';

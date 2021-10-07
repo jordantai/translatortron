@@ -24,6 +24,18 @@ const extractLangStrings = (file) => {
   });
 };
 
-const file = "./langstrings.php";
+const extractIdentifiers = (file) => {
+  fs.readFile(file, function (err, data) {
+    const regex = /\$string\['[a-z_].+'\]\s*/g;
+    const result = data.toString().match(regex);
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(result);
+    }
+  });
+};
 
-extractLangStrings(file);
+const file = "./langstrings.php";
+extractIdentifiers(file);
+//extractLangStrings(file);
