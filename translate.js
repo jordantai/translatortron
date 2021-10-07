@@ -8,6 +8,7 @@ const { TranslationServiceClient } = require("@google-cloud/translate");
 const translationClient = new TranslationServiceClient();
 
 exports.translateText = async (text, srcLang, targetLang) => {
+  console.log({ text });
   // Construct request
   const request = {
     parent: `projects/${projectId}/locations/${location}`,

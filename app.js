@@ -1,41 +1,49 @@
 const fs = require("fs");
 const { translateText } = require("./translate");
-const text = ["Hello", "yes", "no", "red", "black"];
 
 const srcLang = "en";
 const targetLang = "it";
 
-//translateText(text, srcLang, targetLang);
-// const file = fs.readFileSync("./langstrings.php");
-// const fileStr = file.toString();
-// console.log( JSON.stringify( fileStr ) );
-
 const extractLangStrings = (file) => {
-  fs.readFile(file, function (err, data) {
-    //console.log(data.toString());
-    const regex = /= '[A-Za-z].+'/g;
-    //const result = regex.exec(data);
-    const result = data.toString().match(regex);
-    if (err) {
+  return fs.promises
+    .readFile(file)
+    .then((result) => {
+      const regex = /= '[A-Za-z].+'/g;
+      const strArray = result.toString().match(regex);
+      const resultArr = strArray.map((str) => {
+        return str.slice(3, -1);
+      });
+      return resultArr;
+    })
+    .catch((err) => {
       console.log(err);
-    } else {
-      console.log(result);
-    }
-  });
+    });
 };
 
 const extractIdentifiers = (file) => {
-  fs.readFile(file, function (err, data) {
-    const regex = /\$string\['[a-z_].+'\]\s*/g;
-    const result = data.toString().match(regex);
-    if (err) {
+  return fs.promises
+    .readFile(file)
+    .then((result) => {
+      const regex = /\$string\['[a-z_].+'\]\s*/g;
+      const strArray = result.toString().match(regex);
+      const resultArr = strArray.map((str) => {
+        return str;
+      });
+      return resultArr;
+    })
+    .catch((err) => {
       console.log(err);
-    } else {
-      console.log(result);
-    }
-  });
+    });
 };
 
-const file = "./langstrings.php";
-extractIdentifiers(file);
+const textFile = "./langstrings.php";
+//extractIdentifiers(file);
 //extractLangStrings(file);
+const str = extractLangStrings(textFile).then((result) => {
+  console.log(translateText(result, srcLang, targetLang));
+});
+extractIdentifiers(textFile).then((res) => {
+  console.log(res);
+});
+
+//translateText(str, srcLang, targetLang);
