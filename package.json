@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "translator for totara lang string files",
   "main": "app.js",
-  "devDependencies": {},
   "scripts": {
     "test": "npm run test"
   },
@@ -16,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/jordantai/translatortron/issues"
   },
-  "homepage": "https://github.com/jordantai/translatortron#readme"
+  "homepage": "https://github.com/jordantai/translatortron#readme",
+  "dependencies": {
+    "@google-cloud/translate": "^6.3.0"
+  }
 }

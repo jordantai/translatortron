@@ -1,4 +1,3 @@
-const projectId = "arched-router-328212";
 const location = "global";
 
 // Imports GC Translation library
@@ -7,7 +6,8 @@ const { TranslationServiceClient } = require("@google-cloud/translate");
 // Instantiates a client
 const translationClient = new TranslationServiceClient();
 
-exports.translateText = async (text, srcLang, targetLang) => {
+exports.translateText = async (text, srcLang, targetLang, callback) => {
+  //console.log({ text });
   // Construct request
   const request = {
     parent: `projects/${projectId}/locations/${location}`,
@@ -21,6 +21,7 @@ exports.translateText = async (text, srcLang, targetLang) => {
   const [response] = await translationClient.translateText(request);
 
   for (const translation of response.translations) {
-    console.log(`Translation: ${translation.translatedText}`);
+    callback(translation.translatedText.split(","));
+    return translation.translatedText.split(",");
   }
 };

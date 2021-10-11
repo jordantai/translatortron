@@ -25,7 +25,6 @@ $string['my_courses_header_desc'] = 'The image shown in the collapsible header o
 
 // CCL name and copyright text
 $string['full_ccl_name']             = 'Center for Creative Leadership';
-$string['copyright_symbol_and_year'] = '© ' . date('Y');
 
 // Header navigation tab text
 // Courses
@@ -52,7 +51,7 @@ $string['certificate']  = 'Certificate';
 $string['opens_in']     = 'Opens In';
 $string['access_start'] = 'Access Start';
 $string['access_end']   = 'Access End';
-$string['n_a']          = "N/A";
+$string['n_a']          = 'N/A';
 
 // Course Status
 $string['course_status_current']  = 'Current';

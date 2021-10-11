@@ -1,29 +1,65 @@
 const fs = require("fs");
 const { translateText } = require("./translate");
-const text = ["Hello", "yes", "no", "red", "black"];
 
 const srcLang = "en";
-const targetLang = "it";
+const targetLang = "pl";
 
-//translateText(text, srcLang, targetLang);
-// const file = fs.readFileSync("./langstrings.php");
-// const fileStr = file.toString();
-// console.log( JSON.stringify( fileStr ) );
-
-const extractLangStrings = (file) => {
-  fs.readFile(file, function (err, data) {
-    //console.log(data.toString());
-    const regex = /= '[A-Za-z].+'/g;
-    //const result = regex.exec(data);
-    const result = data.toString().match(regex);
-    if (err) {
+const extractLangStrings = (file, callback) => {
+  return fs.promises
+    .readFile(file)
+    .then((result) => {
+      const regex = /= '[A-Za-z].+'/g;
+      const strArray = result.toString().match(regex);
+      const resultArr = strArray.map((str) => {
+        return str;
+      });
+      callback(resultArr);
+      return resultArr;
+    })
+    .catch((err) => {
       console.log(err);
-    } else {
-      console.log(result);
-    }
-  });
+    });
 };
 
-const file = "./langstrings.php";
+const extractIdentifiers = (file, callback) => {
+  return fs.promises
+    .readFile(file)
+    .then((result) => {
+      const regex = /\$string\['[a-z_].+'\]\s*/g;
+      const strArray = result.toString().match(regex);
+      const resultArr = strArray.map((str) => {
+        return str;
+      });
+      callback(resultArr);
+      return resultArr;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
-extractLangStrings(file);
+const textFile = "./langstrings.php";
+
+const formNewFile = (arr1, arr2) => {
+  let newArr = [];
+  for (let i = 0; i < arr1.length; i++) {
+    newArr.push(arr1[i] + arr2[i] + ";\n");
+  }
+  console.log({ newArr });
+  return newArr;
+};
+
+let identifiers;
+let languageStrings;
+extractLangStrings(textFile, (result) => {
+  languageStrings = result;
+  extractIdentifiers(textFile, (result) => {
+    identifiers = result;
+
+    translateText(languageStrings, srcLang, targetLang, () => {}).then(
+      (result) => {
+        fs.promises.writeFile("polish.php", formNewFile(identifiers, result));
+      },
+    );
+  });
+});
