@@ -1,4 +1,3 @@
-const projectId = "arched-router-328212";
 const location = "global";
 
 // Imports GC Translation library
